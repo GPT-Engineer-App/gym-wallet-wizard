@@ -1,11 +1,65 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Dumbbell, DollarSign, Users, CreditCard } from 'lucide-react';
 
 const Index = () => {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const navigate = useNavigate();
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    // Here you would typically validate the credentials
+    // For now, we'll just navigate to the dashboard
+    navigate('/dashboard');
+  };
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-gray-600">Start building your amazing project here!</p>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-500 to-purple-600">
+      <div className="bg-white p-8 rounded-lg shadow-lg w-96">
+        <div className="flex items-center justify-center mb-6">
+          <Dumbbell className="h-12 w-12 text-blue-600 mr-2" />
+          <h1 className="text-3xl font-bold text-gray-800">Gym Pay</h1>
+        </div>
+        <form onSubmit={handleLogin}>
+          <div className="mb-4">
+            <Input
+              type="text"
+              placeholder="Username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              className="w-full"
+            />
+          </div>
+          <div className="mb-6">
+            <Input
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full"
+            />
+          </div>
+          <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700">
+            Login
+          </Button>
+        </form>
+        <div className="mt-6 flex justify-around text-gray-600">
+          <div className="flex flex-col items-center">
+            <DollarSign className="h-6 w-6 mb-1" />
+            <span className="text-sm">Easy Payments</span>
+          </div>
+          <div className="flex flex-col items-center">
+            <Users className="h-6 w-6 mb-1" />
+            <span className="text-sm">Member Management</span>
+          </div>
+          <div className="flex flex-col items-center">
+            <CreditCard className="h-6 w-6 mb-1" />
+            <span className="text-sm">Mpesa Integration</span>
+          </div>
+        </div>
       </div>
     </div>
   );
