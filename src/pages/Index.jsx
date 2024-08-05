@@ -2,18 +2,22 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Dumbbell, DollarSign, Users, CreditCard } from 'lucide-react';
+import { Dumbbell, DollarSign, Users, CreditCard, BarChart } from 'lucide-react';
 
 const Index = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const handleLogin = (e, role) => {
     e.preventDefault();
     // Here you would typically validate the credentials
-    // For now, we'll just navigate to the dashboard
-    navigate('/dashboard');
+    // For now, we'll just navigate to the appropriate dashboard
+    if (role === 'admin') {
+      navigate('/admin-dashboard');
+    } else {
+      navigate('/client-dashboard');
+    }
   };
 
   return (
@@ -23,7 +27,7 @@ const Index = () => {
           <Dumbbell className="h-12 w-12 text-blue-600 mr-2" />
           <h1 className="text-3xl font-bold text-gray-800">Gym Pay</h1>
         </div>
-        <form onSubmit={handleLogin}>
+        <form>
           <div className="mb-4">
             <Input
               type="text"
@@ -42,9 +46,14 @@ const Index = () => {
               className="w-full"
             />
           </div>
-          <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700">
-            Login
-          </Button>
+          <div className="flex space-x-4">
+            <Button onClick={(e) => handleLogin(e, 'admin')} className="flex-1 bg-blue-600 hover:bg-blue-700">
+              Admin Login
+            </Button>
+            <Button onClick={(e) => handleLogin(e, 'client')} className="flex-1 bg-green-600 hover:bg-green-700">
+              Client Login
+            </Button>
+          </div>
         </form>
         <div className="mt-6 flex justify-around text-gray-600">
           <div className="flex flex-col items-center">
@@ -56,8 +65,8 @@ const Index = () => {
             <span className="text-sm">Member Management</span>
           </div>
           <div className="flex flex-col items-center">
-            <CreditCard className="h-6 w-6 mb-1" />
-            <span className="text-sm">Mpesa Integration</span>
+            <BarChart className="h-6 w-6 mb-1" />
+            <span className="text-sm">Progress Tracking</span>
           </div>
         </div>
       </div>
